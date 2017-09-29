@@ -1,14 +1,14 @@
 {
-  "name": "react-scripts",
-  "version": "1.0.14",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebookincubator/create-react-app",
+  "name": "react-scripts-kt",
+  "version": "0.0.1",
+  "description": "Configuration and scripts for Create React App using Kotlin.",
+  "repository": "Danilo-Araujo-Silva/create-react-app-kotlin",
   "license": "MIT",
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://github.com/Danilo-Araujo-Silva/create-react-app-kotlin/issues"
   },
   "files": [
     "bin",
@@ -18,7 +18,7 @@
     "utils"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "react-scripts-kt": "./bin/react-scripts-kt.js"
   },
   "dependencies": {
     "autoprefixer": "7.1.2",
@@ -44,6 +44,7 @@
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
+    "kotlin": "^1.1.51",
     "object-assign": "4.1.1",
     "postcss-flexbugs-fixes": "3.2.0",
     "postcss-loader": "2.0.6",

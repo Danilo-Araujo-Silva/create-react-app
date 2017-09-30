@@ -37,12 +37,12 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts-kotlin start',
-    build: 'react-scripts-kotlin build',
-    test: 'react-scripts-kotlin test --env=jsdom',
-    eject: 'react-scripts-kotlin eject',
-		'gen-idea-libs': 'react-scripts-kotlin gen-idea-libs',
-		'get-types': 'react-scripts-kotlin get-types --dest=src/types',
+    start: 'react-scripts-kt start',
+    build: 'react-scripts-kt build',
+    test: 'react-scripts-kt test --env=jsdom',
+    eject: 'react-scripts-kt eject',
+		'gen-idea-libs': 'react-scripts-kt gen-idea-libs',
+		'get-types': 'react-scripts-kt get-types --dest=src/types',
   };
 
   // !!! What's the purpose of this?

@@ -96,7 +96,17 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
+		extensions: [
+			'.web.kt',
+			'.kt',
+			'.web.ktx',
+			'.ktx',
+			'.web.js',
+			'.js',
+			'.json',
+			'.web.jsx',
+			'.jsx',
+		],
     alias: {
       // @remove-on-eject-begin
       // Resolve Babel runtime relative to react-scripts.
@@ -130,7 +140,7 @@ module.exports = {
       // First, run the linter.
       // It's important to do this before Babel processes the JS.
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(kt|ktx)$/,
         enforce: 'pre',
         use: [
           {
@@ -167,9 +177,9 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-          // Process JS with Babel.
+          // Process Kotlin with Babel.
           {
-            test: /\.(js|jsx)$/,
+            test: /\.(kt|ktx)$/,
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {

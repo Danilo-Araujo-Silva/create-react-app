@@ -37,11 +37,26 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test --env=jsdom',
-    eject: 'react-scripts eject',
+    start: 'react-scripts-kotlin start',
+    build: 'react-scripts-kotlin build',
+    test: 'react-scripts-kotlin test --env=jsdom',
+    eject: 'react-scripts-kotlin eject',
+		'gen-idea-libs': 'react-scripts-kotlin gen-idea-libs',
+		'get-types': 'react-scripts-kotlin get-types --dest=src/types',
   };
+
+  // !!! What's the purpose of this?
+	if (process.argv.includes('--idea')) {
+		const ideaPath = path.join(ownPath, 'template-idea');
+		fs.copySync(ideaPath, appPath);
+		fs.renameSync(
+			path.join(appPath, 'template-idea.iml'),
+			path.join(appPath, `${appName}.iml`)
+		);
+		const modulesPath = path.join(appPath, '.idea/modules.xml');
+		const modules = fs.readFileSync(modulesPath, 'utf8');
+		fs.writeFileSync(modulesPath, modules.replace(/%appName%/g, appName));
+	}
 
   fs.writeFileSync(
     path.join(appPath, 'package.json'),

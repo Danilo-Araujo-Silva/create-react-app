@@ -15,6 +15,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+const KotlinWebpackPlugin = require('kotlin-webpack-plugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
@@ -33,6 +34,9 @@ const env = getClientEnvironment(publicUrl);
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
+
+const kotlinModuleName = 'kotlinApp';
+
 module.exports = {
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
@@ -55,7 +59,8 @@ module.exports = {
     // require.resolve('webpack/hot/dev-server'),
     require.resolve('react-dev-utils/webpackHotDevClient'),
     // Finally, this is your app's code:
-    paths.appIndexJs,
+    // paths.appIndexJs, //!!! remove and use the next one?
+		kotlinModuleName,
     // We include the app code last so that if there is a runtime error during
     // initialization, it doesn't blow up the WebpackDevServer client, and
     // changing JS code would still trigger a refresh.
@@ -82,7 +87,11 @@ module.exports = {
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
-    modules: ['node_modules', paths.appNodeModules].concat(
+    modules: [
+			paths.kotlinOutputPath,
+      'node_modules',
+      paths.appNodeModules,
+    ].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
@@ -144,7 +153,8 @@ module.exports = {
             loader: require.resolve('eslint-loader'),
           },
         ],
-        include: paths.appSrc,
+        // include: paths.appSrc, //!!! disable this line and enable the next one?
+				include: paths.kotlinOutputPath,
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -165,7 +175,8 @@ module.exports = {
           // Process JS with Babel.
           {
             test: /\.(js|jsx)$/,
-            include: paths.appSrc,
+						// include: paths.appSrc, //!!! disable this line and enable the next one?
+						include: paths.kotlinOutputPath,
             loader: require.resolve('babel-loader'),
             options: {
               // @remove-on-eject-begin
@@ -238,6 +249,18 @@ module.exports = {
     ],
   },
   plugins: [
+    //!!! Are these @hypnosphi libraries really needed or could be replaced?
+		new KotlinWebpackPlugin({
+			src: paths.appSrc,
+			output: paths.kotlinOutputPath,
+			moduleName: kotlinModuleName,
+			libraries: [
+				'@hypnosphi/kotlin-extensions',
+				'@hypnosphi/kotlin-react',
+				'@hypnosphi/kotlin-react-dom',
+				'@hypnosphi/kotlinx-html-js',
+			].map(pkg => require.resolve(pkg)),
+		}),
     // Makes some environment variables available in index.html.
     // The public URL is available as %PUBLIC_URL% in index.html, e.g.:
     // <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">

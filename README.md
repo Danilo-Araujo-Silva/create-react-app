@@ -10,7 +10,9 @@ but only for development purposes.
 ## How to Use
 
 	yarn global add create-react-app
-	create-react-app --scripts-version react-scripts-kt
+    create-react-app my-app --scripts-version react-scripts-kt
+    cd my-app
+    yarn start
 	
 Enjoy!
 
